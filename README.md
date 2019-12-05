@@ -1,6 +1,7 @@
 # Python-compiler-for-Windows
-h1 Python compiler for Windows - простой компилятор скриптов Python в .EXE файлы.
 =====================
+Python compiler for Windows - простой компилятор скриптов Python в .EXE файлы.
+
 Имеет графический интерфейс, создан на основе PyInstaller
 ***
 Программу легко может модифицировать под себя любой, даже не сильно разбирающийся в синтаксисе Python пользователь.
