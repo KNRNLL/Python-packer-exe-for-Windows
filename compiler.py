@@ -12,6 +12,7 @@ import PyInstaller.__main__
 
 checkbuttons_id = int()
 
+
 class Buttons():
     '''
         Класс отвечает за создание и работу кнопок
@@ -66,9 +67,35 @@ list_check = [
 # check_admin.checkbuttons('check_admin', 'Требовать права Админитратора'),
 
 
-def file_setting():
+def bt_open_func()-> 'open folder':
+    '''
+        Кнопка открыть рабочий каталог
+        Функция проверяет наличие пути, указанного в поле ввода
+        Если адрес недоступен - создает каталог в полном соответствии
+        с введенными данными в текстовом поле
+    '''
 
-    # open file dialog
+    if os.path.isdir(save_patch_file.get()):
+        os.system('explorer %s' % os.path.abspath(save_patch_file.get()))
+    else:
+        os.mkdir(save_patch_file.get())
+        os.system('explorer %s' % os.path.abspath(save_patch_file.get()))
+
+
+def file_setting():
+    '''
+        Диалоговое окно выбора скрипта Python для компилляции
+        Проверяет, действительно ли выбран файл с расширением .py
+
+        ---> Если да, удаляем содержимое текстового поля (input_patch_file),
+             если не пустое. Затем записываем туда путь до файла
+             В поле с именем файла (input_name_file) -
+                                     автомтически пишем имя выбранного файла
+             Далее активируем кнопку компилляции (bt_run)
+
+        ---> Если выбран файл не с расширением .py, то выводим соответствующее
+             сообщение, а так же деактивируем кнопки, если активны
+    '''
     file_name = fd.askopenfilename()
     if file_name.endswith('.py'):
         if input_patch_file.get() != '':
@@ -77,7 +104,7 @@ def file_setting():
         if input_name_file.get() == '':
             input_name_file.insert(0, os.path.basename(file_name))
         if len(bt_run.place_info()) < 1:
-           bt_run.place(x=20, y=125, height=25)
+            bt_run.place(x=20, y=125, height=25)
         return file_name
     else:
         if input_patch_file.get() != '':
@@ -90,15 +117,14 @@ def file_setting():
 # Функция компилляций файла
 def file_compilled():
 
-    # Поработать с на путями с пробелами
     py_compiled_list = ['--name=%s' % input_name_file.get()]
-    if check_clean.flag_check.get():
-        py_compiled_list.append('--clean')
     if check_onefile.flag_check.get():
         py_compiled_list.append('-F')
     if check_noconsole.flag_check.get():
         py_compiled_list.append('-w')
-    py_compiled_list.append(input_patch_file.get())
+    py_compiled_list.append(os.path.abspath(input_patch_file.get()))
+    if check_clean.flag_check.get():
+        py_compiled_list.append('--clean')
     PyInstaller.__main__.run(py_compiled_list)
 
 
@@ -110,7 +136,7 @@ input_patch_file.place(x=20,  y=25,
 name_patch_file = tk.Label(text='Укажите путь к вашему файлу')
 name_patch_file.place(x=20, y=3, width=180)
 
-# Кнопка диалога выбора файла
+# Кнопка диалога выбора файла, который будем компиллировать
 bt_patch = tk.Button(text='...', command=file_setting)
 bt_patch.place(x=260, y=25, height=25)
 
@@ -126,6 +152,21 @@ bt_run = tk.Button(text='Запустить сборку!', command=file_compill
 # Lbel name file
 name_your_file = tk.Label(text='Как вы назовете ваш проект?')
 name_your_file.place(x=20, y=50, width=180)
+
+###################################################################
+# информация о каталоге, в котором будет сохранен проект:
+# label, Enty, Button
+save_patch_info = tk.Label(text='Проект будет сохранен по адресу:')
+save_patch_info.place(x=20, y=175, height=25)
+# Текстовое поле с адресом рабочего каталога
+save_patch_file = tk.Entry()
+save_patch_file.insert(0, os.getcwd() + '\\dist\\')
+save_patch_file.configure(state='disable')
+save_patch_file.place(x=20,  y=200, width=400, height=25)
+# Кнопка Open - откорыть рабочий каталог
+bt_open = tk.Button(text='open', command=bt_open_func)
+bt_open.place(x=425, y=200)
+####################################################################
 
 
 if __name__ == '__main__':
