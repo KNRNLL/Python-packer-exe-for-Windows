@@ -170,7 +170,7 @@ bt_open.place(x=425, y=200)
 
 
 if __name__ == '__main__':
-    root.title("Компиллятор скриптов Python в .exe")
+    root.title("Упаковщик скриптов Python в .exe")
     root.geometry('600x400')
     root.resizable(0, 0)
     root.mainloop()
