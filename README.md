@@ -1,14 +1,8 @@
-# Python-compiler-for-Windows
 
-Python packer for Windows - простой упаковщик скриптов Python в .EXE файлы.
-
-Имеет графический интерфейс, создан на основе PyInstaller
-***
-Программу легк# Python-compiler-for-Windows
-
-Python packer for Windows - простой упаковщик скриптов Python в .EXE файлы.
+# Python packer for Windows - простой упаковщик скриптов Python в .EXE файлы.
 
 Имеет графический интерфейс, создан на основе PyInstaller
+
 ***
 Программу легко может модифицировать под себя любой, даже не сильно разбирающийся в синтаксисе Python пользователь.
 Для работы программы потребуется установить модуль [Pyinstaller](https://pypi.org/project/PyInstaller/)
